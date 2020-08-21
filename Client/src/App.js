@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Bookshelf from "./pages/bookshelf";
 import Search from "./pages/search";
-import NavBar from "./components/NavBar/NavBar";
+import Navbar from "./components/Navbar/Navbar";
 
 const App = () => (
   <Router>
     <div>
-      <NavBar />
+      <Navbar />
       <Route exact path="/" component={Search} />
       <Route exact path="/bookshelf" component={Bookshelf} />
       <Route exact path="/search" component={Search} />
