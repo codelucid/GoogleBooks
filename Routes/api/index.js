@@ -1,11 +1,8 @@
 const router = require("express").Router();
 const bookRoutes = require("./books");
-const googleRoute = require("./google");
 
 // Book routes
+// matches with "localhost:3001/api/books"
 router.use("/books", bookRoutes);
-
-// Google route
-router.use("/google", googleRoute);
 
 module.exports = router;
