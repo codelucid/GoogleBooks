@@ -1,26 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Search from "./pages/Search";
-import Saved from "./pages/Saved";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "./pages/home";
+import Bookshelf from "./pages/bookshelf";
+import Search from "./pages/search";
+import NavBar from "./components/NavBar/NavBar";
 
-import Nav from "./components/Nav";
+const App = () => (
+  <Router>
+    <div>
+      <NavBar />
+      <Route exact path="/" component={Search} />
+      <Route exact path="/bookshelf" component={Bookshelf} />
+      <Route exact path="/search" component={Search} />
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-          <Route exact path={["/", "/search"]} component={Search}>
-            <Search />
-          </Route>
-          <Route exact path={"/saved"} component={Saved}>
-            <Saved />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+    </div>
+  </Router>
+);
 
 export default App;
