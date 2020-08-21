@@ -18,7 +18,7 @@ export default {
       return axios.post("/api/books", bookData);
     },
     // Gets an array of books from Google based on the searchTerm
-    googleBook: function(searchTerm) {
+    searchBooks: function(searchTerm) {
       return axios.get("https://www.googleapis.com/books/v1/volumes?q=" + searchTerm);
     }
 };

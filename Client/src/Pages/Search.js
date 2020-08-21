@@ -1,120 +1,118 @@
-import React, { useState, useEffect } from "react";
-import SaveBtn from "../components/SaveBtn";
-import Jumbotron from "../components/Jumbotron";
+import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
+import "./pages.css";
 import API from "../utils/api";
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, FormBtn } from "../components/Form";
-import Image from "../components/Image";
-import HyperLink from "../components/HyperLink";
+import Container from "../components/Layout/container";
+import Wrapper from "../components/Layout/wrapper";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import BookCard from "../components/Card";
+import Searchform from "../components/Search/Searchform";
+import SearchResults from "../components/SearchResults";
 
-function Search() {
-    // Setting our component's initial state
-    const [books, setBooks] = useState([])
-    const [formObject, setFormObject] = useState({})
+class Search extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: "",
+      books: [],
+      title: "",
+      authors:[],
+      description:[],
+      synopsis: "",
+      image:"",
+      link:""
+    };
+    this.handleSaveBook = this.handleSaveBook.bind(BookCard);
+  }
+  // When the component mounts, get a list of all available books
     
-    // Load all books and store them with setBooks
-    useEffect(() => {
-        loadBooks()
-    }, [])
-
-    // Loads all books and sets them to books
-    function loadBooks() {
-        API.getBooks()
-            .then(res =>
-                setBooks(res.data)
-            )
-            .catch(err => console.log(err));
-    };
-
-    // Saves a book from the database with a given id, then reloads books from the db
-    function saveBook(id) {
-        API.saveBook(id)
-            .then(res => loadBooks())
-            .catch(err => console.log(err));
-    }
-
-    // Handles updating component state when the user types into the input field
-    function handleInputChange(event) {
-        const { name, value } = event.target;
-        setFormObject({ ...formObject, [name]: value })
-    };
-
-    // When the form is submitted, use the API.saveBook method to save the book data
-    // Then reload books from the database
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        API.googleBook(formObject.title).then(function(res) {
-            console.log(res);
-            
-        })
-        // if (formObject.title) {
-        //     API.saveBook({
-        //         title: formObject.title,
-        //         author: formObject.author,
-        //         description: formObject.description,
-        //         thumbnail: formObject.thumbnail,
-        //         href: formObject.href
-        //     })
-        //         .then(res => loadBooks())
-        //         .catch(err => console.log(err));
-        // }
-    };
-
+  // handle search input term
+  handleSearchInput = event => {
+    this.setState({ search: event.target.value });
+  };
+  // on form sumbit -> search for books
+  handleFormSubmit = event => {
+    event.preventDefault();
+    API.searchBooks(this.state.search)
+      .then(res => {
+        console.log(res.data.items);
+        this.setState({ books: [...res.data.items] });
+      })
+      .catch(err => this.setState({ error: err.message }));
+  };
+  clickAddBtn = (event) => {
+    event.preventDefault();
+    console.log("click");
+    this.state.books.map((book, i) => {
+      this.id = book._id,
+      this.key = book._id,
+      this.title = book.volumeInfo.title,
+      this.authors = book.volumeInfo.authors,
+      this.description = book.volumeInfo.description,
+      this.synopsis = book.searchInfo,
+      this.image = book.volumeInfo.imageLinks,
+      this.link = book.selfLink
+    })
+    Object.keys(this.synopsis).forEach((key) => {
+      let sKey = this.synopsis[key];
+      let iKey = this.image[key];
+      console.log(sKey, iKey);
+    }) 
+    
+    console.log(this.title, this.authors, this.description, this.synopsis, this.image);
+  }
+  // // Save book
+  handleSaveBook = event => {
+    event.preventDefault();
+    console.log("click");
+    this.state.books.map((book, i) => {
+      this.id = book._id,
+      this.key = book._id,
+      this.title = book.volumeInfo.title,
+      this.authors = book.volumeInfo.authors,
+      this.description = book.volumeInfo.description,
+      this.synopsis = book.searchInfo,
+      this.image = book.volumeInfo.imageLinks,
+      this.link = book.selfLink
+    })
+    console.log(this.title, this.authors, this.description, this.synopsis, this.image);
+    API.saveBook({
+      title: this.title,
+      authors: this.authors,
+      description: this.description,
+      image: this.image,
+      link: this.link
+    })
+      .then(res => alert("Book has been added to your bookshelf!"))
+      .catch(err => console.log(err));
+  };
+  render() {
     return (
-        <Container fluid>
-            <Row>
-                <Col size="md-12">
-                    <Jumbotron>
-                        <h1>Google Books Search!</h1>
-                    </Jumbotron>
-                    <form>
-                        <Input
-                            onChange={handleInputChange}
-                            name="title"
-                            placeholder="Title (required)"
-                        />
-                        <FormBtn
-                            disabled={!(formObject.title)}
-                            onClick={handleFormSubmit}
-                        >
-                            Search for Book
-                        </FormBtn>
-                    </form>
-                </Col>
-            </Row>
-            <Jumbotron>
-            <Row>
-                <Col size="md-12 sm-12">
-                    {books.length ? (
-                        <List>
-                            {books.map(book => (
-                                <ListItem key={book._id}>
-                                    <Link to={"/books" + book._id}>
-                                        <strong>
-                                            {book.title} by {book.author}
-                                        </strong>
-                                    </Link>
-                                    <article>
-                                        <h5>Description</h5>
-                                        <p>{book.description}</p>
-                                    </article>
-                                    <Image thumbnail={book.thumbnail} />
-                                    <HyperLink href={book.href} />
-                                    <SaveBtn onClick={() => saveBook(book._id)} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    ) : (
-                            <h3>No Results to Display</h3>
-                        )}
-                </Col>
-            </Row>
-            </Jumbotron>
-        </Container>
-    );
-}
+      <div>
+        <Wrapper>
+          <Container style={{ minHeight: "80%" }}>
+            <Typography id="pageTitle" variant="h4" component="h3">
+              Search for a book!
+            </Typography>
 
+            <Searchform
+              handleSearchInput={this.handleSearchInput}
+              handleFormSubmit={this.handleFormSubmit}
+            />
+          </Container>
+
+          <Container>
+            <SearchResults 
+              books={this.state.books}
+              onClick={this.handleSaveBook}
+            />
+          </Container>
+        </Wrapper>
+   
+      </div>
+    );
+  }
+}
 
 export default Search;
