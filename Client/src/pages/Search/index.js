@@ -17,20 +17,21 @@ class Search extends Component {
   };
 
   searchGBooks = (query) => {
-    this.state.query
+    // this.state.query;
     API.searchBooks(query).then(res => {
-      this.displayRes(res.data)
+     this.displayRes(res.data)
     })
      .catch(err => console.log(err));
   };
 
   handleInput = event => {
     const { name, value } = event.target;
-
+    
     this.setState({
       [name]: value
     });
-    //console.log("Query", this.state.query);
+    // this.setState({ query: event.target.value })
+    console.log("Query", this.state.query);
   };
 
 
