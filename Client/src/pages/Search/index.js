@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import AddBookBtn from "../../components/AddBookBtn";
 import { Row, Col } from "../../components/Grid";
 import { BookList, BookListItem } from "../../components/BookList";
 import EmptyList from "../../components/EmptyList";
-
+import API from "../../utils/api";
 
 class Search extends Component {
   state = {
@@ -18,16 +17,11 @@ class Search extends Component {
   };
 
   searchGBooks = () => {
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${
-      this.state.query
-    }`;
-    axios
-      .get(url)
-      .then(res => {
-        //console.log(res);
-        this.displayRes(res.data);
-      })
-      .catch(err => console.log(err));
+    this.state.query
+    API.searchBooks().then(res => {
+      this.displayRes(res.data)
+    })
+     .catch(err => console.log(err));
   };
 
   handleInput = event => {
