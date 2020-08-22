@@ -16,9 +16,9 @@ class Search extends Component {
     this.setState({ books: data.items });
   };
 
-  searchGBooks = () => {
+  searchGBooks = (query) => {
     this.state.query
-    API.searchBooks().then(res => {
+    API.searchBooks(query).then(res => {
       this.displayRes(res.data)
     })
      .catch(err => console.log(err));
