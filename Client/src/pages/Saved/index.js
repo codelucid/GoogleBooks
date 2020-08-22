@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from "../../components/Grid";
 import { BookList, BookListItem } from "../../components/BookList";
-import axios from "axios";
+import API from "../../utils/api";
 import EmptyList from '../../components/EmptyList';
 import RemoveBookBtn from '../../components/RemoveBookBtn';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ class Saved extends Component {
   }
 
   getBooks = () => {
-    axios.get("/api/books")
+    API.getBooks()
       .then(res => {
         this.setState({ savedBooks: res.data })
       })
@@ -28,7 +28,7 @@ class Saved extends Component {
   deleteFromDB = id => {
     console.log(id);
 
-    axios.delete(`/api/books/${id}`)
+    API.deleteBook(id)
       .then( () => {
         toast.error('Book Deleted');
         this.getBooks();
