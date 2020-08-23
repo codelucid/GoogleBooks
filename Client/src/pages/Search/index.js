@@ -18,7 +18,7 @@ class Search extends Component {
 
   searchGBooks = (query) => {
     // this.state.query;
-    API.searchBooks(query).then(res => {
+    API.searchBooks(this.state.query).then(res => {
      this.displayRes(res.data)
     })
      .catch(err => console.log(err));
@@ -30,8 +30,8 @@ class Search extends Component {
     this.setState({
       [name]: value
     });
-    // this.setState({ query: event.target.value })
-    console.log("Query", this.state.query);
+    
+    // console.log("Query", this.state.query);
   };
 
 
