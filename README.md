@@ -1,12 +1,12 @@
 # GoogleBooks
 
-![GitHub license](https://img.shields.io/badge/Skill-HTML-brightgreen) ![GitHub license](https://img.shields.io/badge/Skill-CSS-blue) ![GitHub license](https://img.shields.io/badge/Skill-JavaScript-red) ![GitHub license](https://img.shields.io/badge/Skill-React-purple) ![GitHub license](https://img.shields.io/badge/Skill-Mongoose-orange) ![GitHub license](https://img.shields.io/badge/Skill-MongoDB-blue)
+![GitHub license](https://img.shields.io/badge/Skill-HTML-brightgreen) ![GitHub license](https://img.shields.io/badge/Skill-CSS-blue) ![GitHub license](https://img.shields.io/badge/Skill-JavaScript-red) ![GitHub license](https://img.shields.io/badge/Skill-React-purple) ![GitHub license](https://img.shields.io/badge/Skill-Mongoose-orange) ![GitHub license](https://img.shields.io/badge/Skill-MongoDB-blue) ![GitHub license](https://img.shields.io/badge/Deployment-Heroku-yellow) ![GitHub license](https://img.shields.io/badge/Deployment-MongoDBAtlas-green)
 
 ## Description  
 
 Search Google's Book API for new exciting book information!  Save your desired books, to the bookshelf, for future reading enjoyment!
 
-[Google Books](https://codelucid.github.io/GoogleBooks/)
+[Google Books](https://googlebooks-for-all.herokuapp.com/)
 
 ## Table of Contents
 - Installation 
